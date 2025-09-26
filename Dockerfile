@@ -1,0 +1,47 @@
+FROM ubuntu:24.04
+
+# Install dependencies for adding PPA and building Neovim
+RUN apt-get update && \
+    apt-get install -y software-properties-common wget curl && \
+    # Add the Neovim PPA for stable releases
+    add-apt-repository ppa:neovim-ppa/unstable -y && \
+    # Update package list to include the new PPA
+    apt-get update && \
+    # Install Neovim from the PPA
+    apt-get install -y curl wget \
+        git unzip \
+        neovim \
+        luarocks nodejs npm \
+        python3.12-venv \
+        ripgrep \
+        fzf \
+        build-essential && \
+    # Clean up to reduce image size
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    groupadd -g 1100 dev && \
+    useradd -m -u 1100 -g dev dev
+
+USER dev
+WORKDIR /home/dev
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
+    /home/dev/.local/bin/uv tool install ruff@latest
+
+COPY --chown=dev . /home/dev/.config/nvim
+# Verify installation
+RUN nvim --headless "+Lazy! install" -c "sleep 20" +qa
+# RUN nvim --headless "+Lazy! sync" +qa
+# Workaround for  Mason async mode.
+# Improvement way in https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
+# RUN nvim --headless -c 'set cmdheight=50' -c 'silent MasonInstallAll' -c 'sleep 60' "+qa"
+# RUN nvim --headless "+Lazy! sync" -c 'sleep 20' +qa
+# RUN nvim "+MasonInstall ruff" -c 'sleep 20' +qa
+RUN nvim --headless +'lua require("mason").setup()' +'lua require("mason-lspconfig").setup({automatic_installation = true})' -c 'sleep 30' +qa
+RUN nvim --headless +"MasonInstall --target=linux_x64_gnu lua-language-server basedpyright ruff stylua" +qa
+# RUN nvim --headless -c 'set cmdheight=50' -c 'MasonToolsInstall' "+qa"
+# RUN nvim --headless +MasonToolsInstall "+sleep 20" +qall
+#RUN nvim --headless -c "sleep 60" +qall
+#RUN nvim --headless +MasonToolsInstallSync +qa
+
+# Set the default command to run Neovim
+CMD ["nvim"]
