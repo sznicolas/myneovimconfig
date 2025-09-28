@@ -1,4 +1,4 @@
-local lsps = { "basedpyright", "lua_ls", "ruff", "stylua" }
+local lsps = vim.g.lsps
 
 return {
 	{
@@ -12,16 +12,12 @@ return {
 		dependencies = { "williamboman/mason.nvim" },
 		config = function()
 			require("mason-lspconfig").setup({
-				--       require("mason-lspcoonfig").setup() -- {
-				-- ensure_installed = { "python-lsp-server" }
-				ensure_installed = lsps,
 				vim.api.nvim_create_user_command("MasonInstallAll", function()
-					vim.cmd("MasonInstall " .. table.concat(ensure_installed, " "))
+					vim.cmd("MasonInstall " .. table.concat(lsps, " "))
 				end, {}),
 			})
 		end,
 	},
-	--  { 'WhoIsSethDaniel/mason-tool-installer.nvim'},
 	{
 		"neovim/nvim-lspconfig",
 		config = function()
@@ -38,8 +34,10 @@ return {
 					},
 				},
 			})
-      -- TODO: Replace with lsps
-			vim.lsp.enable({ "lua_ls", "basedpyright", "ruff" })
+			vim.lsp.enable(lsps)
+			vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go Declaration" })
+			vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go declaration" })
+			vim.keymap.set({ "n" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP Code Actions" })
 		end,
 	},
 }
