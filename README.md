@@ -1,5 +1,9 @@
 # Neovim config
 
+Run in docker:
+```
+drit -v $PWD:/src --network none cr.pictet.io/kts/public/neovim  bash
+```
 ## Inspiration
 
 @typecraft_dev especially for Neovim for Newbs. FREE NEOVIM COURSE 

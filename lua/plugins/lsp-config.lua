@@ -1,3 +1,5 @@
+local lsps = vim.g.lsps
+
 return {
 	{
 		"williamboman/mason.nvim",
@@ -7,11 +9,12 @@ return {
 	},
 	{
 		"williamboman/mason-lspconfig.nvim",
+		dependencies = { "williamboman/mason.nvim" },
 		config = function()
 			require("mason-lspconfig").setup({
-				--       require("mason-lspcoonfig").setup() -- {
-				-- ensure_installed = { "python-lsp-server" }
-				ensure_installed = { "basedpyright", "lua_ls", "ruff" , "stylua"},
+				vim.api.nvim_create_user_command("MasonInstallAll", function()
+					vim.cmd("MasonInstall " .. table.concat(lsps, " "))
+				end, {}),
 			})
 		end,
 	},
@@ -20,9 +23,9 @@ return {
 		config = function()
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 			vim.lsp.config("*", {
-			--	root_markers = {
-		--			".git",
-		--		},
+				--	root_markers = {
+				--			".git",
+				--		},
 				capabilities = {
 					textDocument = {
 						semanticTokens = {
@@ -31,10 +34,10 @@ return {
 					},
 				},
 			})
-			vim.lsp.enable({ "lua_ls", "basedpyright", "ruff" })
-			vim.keymap.set("n", "gD", vim.lsp.buf.declaration, {})
-			vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
-			vim.keymap.set({ "n" }, "<leader>ca", vim.lsp.buf.code_action, {})
+			vim.lsp.enable(lsps)
+			vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go Declaration" })
+			vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go declaration" })
+			vim.keymap.set({ "n" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP Code Actions" })
 		end,
 	},
 }
