@@ -1,8 +1,8 @@
 local opt = vim.opt -- raccourci pour un peu plus de concision
 
 -- numéros de ligne
-opt.relativenumber = true -- affichage des numéros de ligne relatives à la position actuelle du curseur
 opt.number = true -- affiche le numéro absolu de la ligne active lorsque que relativenumber est activé
+opt.relativenumber = true -- affichage des numéros de ligne relatives à la position actuelle du curseur
 
 -- tabs & indentation
 opt.tabstop = 2 -- 2 espaces pour les tabulations
@@ -11,9 +11,9 @@ opt.expandtab = true -- change les tabulations en espaces (don't feed the troll 
 opt.autoindent = true -- on garde l'indentation actuelle à la prochaine ligne
 
 -- recherche
-opt.ignorecase = true -- ignore la casse quand on recherche
-opt.smartcase = true -- sauf quand on fait une recherche avec des majuscules, on rebascule en sensible à la casse
-opt.hlsearch = true -- surlignage de toutes les occurences de la recherche en cours
+-- opt.ignorecase = true -- ignore la casse quand on recherche
+-- opt.smartcase = true -- sauf quand on fait une recherche avec des majuscules, on rebascule en sensible à la casse
+-- opt.hlsearch = true -- surlignage de toutes les occurences de la recherche en cours
 
 -- ligne du curseur
 opt.cursorline = true -- surlignage de la ligne active
@@ -37,7 +37,7 @@ opt.clipboard = "unnamedplus" -- on utilise le presse papier du système par dé
 
 -- opt.swapfile = false -- on supprime le pénible fichier de swap
 
-opt.undofile = true -- on autorise l'undo à l'infini (même quand on revient sur un fichier qu'on avait fermé)
+-- opt.undofile = true -- on autorise l'undo à l'infini (même quand on revient sur un fichier qu'on avait fermé)
 
 opt.iskeyword:append("-") -- on traite les mots avec des - comme un seul mot
 
