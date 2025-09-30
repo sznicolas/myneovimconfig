@@ -4,6 +4,16 @@ opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.foldenable = true
 vim.opt.foldlevel = 99
+
+-- Flash on yank
+local augroup = vim.api.nvim_create_augroup('user_cmds', {clear = true})
+vim.api.nvim_create_autocmd('TextYankPost', {
+  group = augroup,
+  desc = 'Highlight on yank',
+  callback = function(event)
+    vim.highlight.on_yank({higroup = 'Visual', timeout = 380})
+  end
+})
 -- numéros de ligne
 opt.number = true -- affiche le numéro absolu de la ligne active lorsque que relativenumber est activé
 opt.relativenumber = true -- affichage des numéros de ligne relatives à la position actuelle du curseur
