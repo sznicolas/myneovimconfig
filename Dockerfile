@@ -24,19 +24,15 @@ RUN apt-get update && \
 
 USER dev
 WORKDIR /home/dev
+RUN echo -n "[safe]\n    directory = /src" >> .gitconfig
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
     /home/dev/.local/bin/uv tool install ruff@latest
 
 COPY --chown=dev . /home/dev/.config/nvim
 # Verify installation
 RUN nvim --headless "+Lazy! install" -c "sleep 20" +qa
-# RUN nvim --headless "+Lazy! sync" +qa
 # Workaround for  Mason async mode.
-# Improvement way in https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
-# RUN nvim --headless -c 'set cmdheight=50' -c 'silent MasonInstallAll' -c 'sleep 60' "+qa"
-# RUN nvim --headless "+Lazy! sync" -c 'sleep 20' +qa
-# RUN nvim "+MasonInstall ruff" -c 'sleep 20' +qa
-RUN nvim --headless +'lua require("mason").setup()' +'lua require("mason-lspconfig").setup({automatic_installation = true})' -c 'sleep 30' +qa
+RUN nvim --headless +'lua require("mason").setup()' +'lua require("mason-lspconfig").setup({automatic_installation = true})' +qa #-c 'sleep 30' +qa
 RUN nvim --headless +"MasonInstall --target=linux_x64_gnu lua-language-server basedpyright ruff stylua" +qa
 # RUN nvim --headless -c 'set cmdheight=50' -c 'MasonToolsInstall' "+qa"
 # RUN nvim --headless +MasonToolsInstall "+sleep 20" +qall

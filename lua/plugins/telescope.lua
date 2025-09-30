@@ -10,7 +10,8 @@ return {
 			vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
 			vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
 			vim.keymap.set("n", "<leader>gf", builtin.git_files, { desc = "Telescope git_files " })
-			vim.keymap.set("n", "<leader>gc", builtin.git_commits, { desc = "Telescope git_commits" })
+			vim.keymap.set("n", "<leader>gl", builtin.git_commits, { desc = "Git log (Telescope.git_commits)" })
+			vim.keymap.set("n", "<leader>gst", builtin.git_commits, { desc = "Telescope git_status" })
 		end,
 	},
 	{
