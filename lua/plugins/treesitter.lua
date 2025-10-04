@@ -26,7 +26,7 @@ return {
 				"typescript",
 				"vim",
 				"vimdoc",
-        "xml",
+				"xml",
 				"yaml",
 			},
 			highlight = { enable = true },
@@ -35,4 +35,8 @@ return {
 			textobjects = { enable = true },
 		})
 	end,
+	{
+		"HiPhish/rainbow-delimiters.nvim",
+--		event = "VeryLazy",
+	},
 }
