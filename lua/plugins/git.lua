@@ -1,22 +1,30 @@
 -- Install and configure:
 -- * gitsigns
--- * vgit
+-- * Neogit
 
 return {
 	{
-		"tanvirtin/vgit.nvim",
-		dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons" },
-		-- Lazy loading on 'VimEnter' event is necessary.
-		event = "VimEnter",
+		"TimUntersberger/neogit",
+		cmd = "Neogit",
 		config = function()
-			require("vgit").setup()
-			local vgit = require("vgit") -- .setup()
-            vgit.toggle_diff_preference()
-			vim.keymap.set("n", "<leader>gd", vgit.buffer_diff_preview, { desc = "Git Diff preview" })
-			vim.keymap.set("n", "<leader>gD", vgit.project_diff_preview, { desc = "Git Diff project preview" })
-			vim.keymap.set("n", "<leader>gh", vgit.buffer_history_preview, { desc = "Git History preview" })
+			require("neogit").setup({
+				kind = "split", -- opens neogit in a split
+				signs = {
+					-- { CLOSED, OPENED }
+					section = { "", "" },
+					item = { "", "" },
+					hunk = { "", "" },
+				},
+				integrations = { diffview = true }, -- adds integration with diffview.nvim
+			})
 		end,
 	},
+	-- <C-s> Stage Everything
+	-- p Opens pull popup
+	-- P Opens push popup
+	-- c Opens commit popup
+	-- Tab Toggles diff
+	--
 	{
 		"lewis6991/gitsigns.nvim",
 		event = "BufReadPre",

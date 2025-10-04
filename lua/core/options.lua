@@ -6,22 +6,44 @@ vim.opt.foldenable = true
 vim.opt.foldlevel = 99
 
 -- Flash on yank
-local augroup = vim.api.nvim_create_augroup('user_cmds', {clear = true})
-vim.api.nvim_create_autocmd('TextYankPost', {
-  group = augroup,
-  desc = 'Highlight on yank',
-  callback = function(event)
-    vim.highlight.on_yank({higroup = 'Visual', timeout = 380})
-  end
+local augroup = vim.api.nvim_create_augroup("user_cmds", { clear = true })
+vim.api.nvim_create_autocmd("TextYankPost", {
+	group = augroup,
+	desc = "Highlight on yank",
+	callback = function(event)
+		vim.highlight.on_yank({ higroup = "Visual", timeout = 300 })
+	end,
 })
+
+-- reopen file at the last line
+vim.api.nvim_create_autocmd({"BufReadPost"}, {
+    pattern = {"*"},
+    callback = function()
+        if vim.fn.line("'\"") > 1 and vim.fn.line("'\"") <= vim.fn.line("$") then
+            vim.api.nvim_exec("normal! g'\"",false)
+        end
+    end
+})
+
+vim.diagnostic.config({
+      signs = {
+        text = {
+          [vim.diagnostic.severity.ERROR] = "",
+          [vim.diagnostic.severity.WARN] = "",
+          [vim.diagnostic.severity.INFO] = "",
+          [vim.diagnostic.severity.HINT] = "󰌵",
+        },
+      },
+}
+)
 -- numéros de ligne
-opt.number = true -- affiche le numéro absolu de la ligne active lorsque que relativenumber est activé
+opt.number = true  -- affiche le numéro absolu de la ligne active lorsque que relativenumber est activé
 opt.relativenumber = true -- affichage des numéros de ligne relatives à la position actuelle du curseur
 
 -- tabs & indentation
-opt.tabstop = 4-- 2 espaces pour les tabulations
-opt.shiftwidth = 4 -- 2 espaces pour la taille des indentations
-opt.expandtab = true -- change les tabulations en espaces (don't feed the troll please ;) )
+opt.tabstop = 4     -- 2 espaces pour les tabulations
+opt.shiftwidth = 4    -- 2 espaces pour la taille des indentations
+opt.expandtab = true  -- change les tabulations en espaces (don't feed the troll please ;) )
 opt.autoindent = true -- on garde l'indentation actuelle à la prochaine ligne
 
 -- recherche
@@ -36,8 +58,8 @@ opt.cursorline = true -- surlignage de la ligne active
 
 -- termguicolors est nécessaire pour que les thèmes modernes fonctionnent
 opt.termguicolors = true
-opt.background = "dark" -- dark ou light en fonction de votre préférence
-opt.signcolumn = "yes" -- affiche une colonne en plus à gauche pour afficher les signes (évite de décaler le texte)
+opt.background =  "dark"  -- dark ou light en fonction de votre préférence
+opt.signcolumn = "yes" -- :2" -- affiche une colonne en plus à gauche pour afficher les signes (évite de décaler le texte)
 
 -- retour
 opt.backspace = "indent,eol,start" -- on autorise l'utilisation de retour quand on indente, à la fin de ligne ou au début

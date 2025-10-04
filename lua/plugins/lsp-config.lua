@@ -1,4 +1,4 @@
-local lsps = vim.g.lsps
+local lsps = vim.g.lsps -- lsps defined in core/vars.lua
 
 return {
 	{
