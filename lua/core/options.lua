@@ -1,9 +1,12 @@
+local vim = vim -- raccourci pour un peu plus de concision
 local opt = vim.opt -- raccourci pour un peu plus de concision
 
 opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.foldenable = true
 vim.opt.foldlevel = 99
+
+vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
 -- Flash on yank
 local augroup = vim.api.nvim_create_augroup("user_cmds", { clear = true })

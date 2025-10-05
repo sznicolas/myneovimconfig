@@ -18,6 +18,7 @@ return {
 				integrations = { diffview = true }, -- adds integration with diffview.nvim
 			})
 		end,
+        vim.keymap.set("n", "<leader>gg", "<Cmd>Neogit<cr>", { desc = "NeoGit panel" })
 	},
 	-- <C-s> Stage Everything
 	-- p Opens pull popup
