@@ -4,7 +4,19 @@ return {
 	},
 	{ "hrsh7th/cmp-buffer" },
 	{ "hrsh7th/cmp-path" },
-	{ "glepnir/lspsaga.nvim", branch = "main" },
+	-- { "glepnir/lspsaga.nvim", branch = "main" },
+	{ "nvimdev/lspsaga.nvim" },
+			--  {		require("nimdev/lspsaga.nvim").setup({
+			-- 	"nvimdev/lspsaga.nvim",
+			-- 	config = function()
+			-- 		require("lspsaga").setup({})
+			-- 	end,
+			-- 	dependencies = {
+			-- 		"nvim-treesitter/nvim-treesitter", -- optional
+			-- 		"nvim-tree/nvim-web-devicons", -- optional
+			-- 	},
+			-- })
+			--  },
 	{
 		"L3MON4D3/LuaSnip",
 		dependencies = {

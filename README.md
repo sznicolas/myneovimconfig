@@ -21,6 +21,7 @@ source .venv/bin/activate
 |  Files      | Grep                    |  <ldr>fg         |
 | Browse      | Toggle File Tree        | <ldr>- |
 | Browse      | Oil                     | <ldr>- |
+|  Git        | Open Neogit interface   |  <ldr>gg         |
 |  Git        | Telescope Commits       |  <ldr>gc         |
 |  Git        | Telescope Files         |  <ldr>gf         |
 |  Git        | Telescope Files         |  <ldr>gf         |
@@ -49,6 +50,16 @@ source .venv/bin/activate
 ./lua/plugins/debugging.lua:		vim.keymap.set("n", "<Leader>dB", dap.set_breakpoint, {})
 ./lua/plugins/none-ls.lua:		vim.keymap.set("n", "<leader>cf", vim.lsp.buf.format, { desc = "Code Formatter" })
 ```
+## Tools quickstart
+### Git
+#### Neogit
+
+* Open Neogit: `<leader>gg`
+* Get help : `?`
+* Here you can `p`ull, `P`ush, `c`ommit.
+* Open a DiffView for all the workspace : `dw`
+* Close Neogit tab : `:DiffViewClose`
+
 
 ## Installed LSPs
 See [vim.g.lsps](lua/core/options.lua)
