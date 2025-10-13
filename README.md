@@ -3,7 +3,8 @@
 ## Quickstart
 Run in docker:
 ```
-drit -v $PWD:/src -w /src --network none cr.pictet.io/kts/public/neovim bash
+docker build -t neovim .
+drit -v $PWD:/src -w /src --network none neovim bash
 ```
 ```
 source .venv/bin/activate
