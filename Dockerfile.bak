@@ -1,0 +1,49 @@
+# Use a base image with a stable Linux distribution, such as Debian, for good package compatibility
+# Debian is often preferred over Alpine for development environments due to better package availability and fewer dependency issues 
+FROM debian:experimental
+
+ENV NEOVIM_TARBALL=nvim-linux-x86_64.tar.gz
+ENV NEOVIM_URL=https://github.com/neovim/neovim/releases/latest/download/$NEOVIM_TARBALL
+
+# Set environment variables for non-interactive package installation
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Update package list and install essential tools and dependencies
+# Install tools commonly used by Neovim plugins, such as language servers, formatters, and utilities
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        curl \
+        git \
+        wget \
+        unzip \
+        python3 \
+        python3-pip \
+        ripgrep \
+        fd-find \
+        nodejs \
+        npm \
+        gcc \
+        make \
+        neovim \
+        && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Create a non-root user for security
+RUN groupadd --gid 1000 dev && \
+    useradd --uid 1000 --gid dev --shell /bin/bash --create-home dev
+
+# Switch to the non-root user
+USER dev
+WORKDIR /home/dev
+
+# Copy your Neovim configuration files into the container
+# Replace the path with the location of your configuration files
+# This example assumes your config is in a local directory named .config/nvim
+COPY --chown=dev:dev . /home/dev/.config/nvim
+
+# Install Neovim plugins using a plugin manager like vim-plug or lazy.nvim
+RUN nvim --headless +qall
+
+# Set the default command to start Neovim
+#CMD ["nvim"]
