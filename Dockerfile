@@ -1,5 +1,6 @@
 FROM ubuntu:24.04
 
+ENV SRCDIR=/src
 # Install dependencies for adding PPA and building Neovim
 RUN apt-get update && \
     apt-get install -y software-properties-common wget curl && \
@@ -20,11 +21,12 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     groupadd -g 1100 dev && \
-    useradd -m -u 1100 -g dev dev
+    useradd -m -u 1100 -g dev -s /usr/bin/bash dev
 
 USER dev
-WORKDIR /home/dev
-RUN echo -n "[safe]\n    directory = /src" >> .gitconfig
+WORKDIR $SRCDIR
+RUN echo -n "[safe]\n    directory = $SRCDIR" >> .gitconfig
+RUN echo -n "alias vi=/usr/bin/nvim\ntest -x $SRCDIR/.venv/bin/activate && source $SRCDIR/.venv/bin/activate" >> .bashrc
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
     /home/dev/.local/bin/uv tool install ruff@latest
 
@@ -40,4 +42,4 @@ RUN nvim --headless +"MasonInstall --target=linux_x64_gnu lua-language-server ba
 #RUN nvim --headless +MasonToolsInstallSync +qa
 
 # Set the default command to run Neovim
-CMD ["nvim"]
+CMD ["/usr/bin/nvim"]
