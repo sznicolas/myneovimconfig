@@ -25,8 +25,8 @@ RUN apt-get update && \
 
 USER dev
 WORKDIR $SRCDIR
-RUN echo -n "[safe]\n    directory = $SRCDIR" >> .gitconfig
-RUN echo -n "alias vi=/usr/bin/nvim\ntest -x $SRCDIR/.venv/bin/activate && source $SRCDIR/.venv/bin/activate" >> .bashrc
+RUN echo -n "[safe]\n    directory = $SRCDIR" >> /home/dev/.gitconfig
+RUN echo -n "alias vi=/usr/bin/nvim\ntest -x $SRCDIR/.venv/bin/activate && source $SRCDIR/.venv/bin/activate" >> /home/dev/.bashrc
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
     /home/dev/.local/bin/uv tool install ruff@latest
 
