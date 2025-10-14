@@ -6,8 +6,9 @@ opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.foldenable = true
 vim.opt.foldlevel = 99
 
+vim.diagnostic.config({ virtual_text = true })
 vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-
+vim.o.winborder = "rounded"
 -- Flash on yank
 local augroup = vim.api.nvim_create_augroup("user_cmds", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
